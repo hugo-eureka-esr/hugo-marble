@@ -1,9 +1,8 @@
 {{ define "main" }}
-{{ $fuseJS := resources.Get "js/fuse.js" | js.Build }}
+{{ $fuseJS := resources.Get "js/fuse.js" | resources.ExecuteAsTemplate "js/fuse.js" . | js.Build (dict "minify" true) | fingerprint "sha384" }}
 <script defer type="text/javascript" src="{{ $fuseJS.Permalink }}"></script>
 <div id="search-wrapper" class="bg-secondary-bg rounded px-6 py-8 lg:mt-12">
-  <form action="/search" class="flex">   
-    {{/*  <label for="simple-search" class="sr-only">Search</label>  */}}
+  <form action="{{ .Permalink }}" class="flex">   
     <input type="text" id="search-input" name="q" class="bg-primary-bg text-primary-text rounded-lg w-full pl-4" placeholder="Search" required>
     <button type="submit" class="p-2 ml-2 text-primary-text bg-primary-bg rounded-lg">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -11,6 +10,6 @@
       </svg>
     </button>
   </form>
-  <div id="search-results" class="prose"></div>
+  <div id="search-results" class="prose py-4"></div>
 </div>
 {{ end }}
