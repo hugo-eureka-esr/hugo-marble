@@ -1,4 +1,4 @@
-module wangchucheng.com/hugo-marble/search
+module github.com/hugo-eureka-esr/hugo-marble/search
 
 go 1.18
 
